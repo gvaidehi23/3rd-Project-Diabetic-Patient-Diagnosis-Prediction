@@ -1,0 +1,94 @@
+pandas
+numpy
+streamlit
+scikit-learn
+
+
+'''st.write('')
+st.write('')
+st.write('')
+
+col1,col2 = st.columns(2)
+
+with col1:
+    Pregnancies = st.slider('Pregnancies', 0, 20, 3)
+    st.write('')
+    Glucose = st.slider('Glucose', 44, 199, 117)
+    st.write('')
+    BloodPressure = st.slider('Blood Pressure', 40, 122, 72)
+    st.write("")
+    SkinThickness = st.slider('Skin Thickness', 7, 99, 23)
+with col2:
+    Insulin = st.slider('Insulin', 15, 184, 125)
+    st.write("")
+    BMI = st.slider('BMI', 10, 67, 32)
+    st.write("")
+    DiabetesPedigreeFunction = st.slider('Diabetes Pedigree Function', 0.078 , 2.42, 0.37)
+    st.write("")
+    Age = st.slider('Age', 21, 81, 33)
+
+# increasing size of small txt
+
+st.markdown("""
+<style>
+[data-testid="stSlider"] p {
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# keeping distance between slider and txt
+
+st.markdown("""
+<style>
+div[data-testid="stSlider"] p {
+    margin-bottom: 15px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# colring predict button
+
+st.markdown("""
+<style>
+div.stButton > button {
+    background-color: #F39C12;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 12px 35px;
+    border: none;
+    transition: 0.3s;
+}
+
+div.stButton > button:hover {
+    background-color: #E67E22;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+}
+</style>
+""", unsafe_allow_html=True)
+
+
+
+st.markdown('<br>', unsafe_allow_html = True)
+col1, col2, col3 = st.columns([1,1,1])
+with col2:
+    predict = st.button('Predict disease')
+    if predict:
+        myip = [[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI,  DiabetesPedigreeFunction, Age ]]
+        columns = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI',  'DiabetesPedigreeFunction', 'Age']
+        scaled = sc.transform(myip)
+        frame = pd.DataFrame(data = scaled, columns = columns)
+        result = model.predict(frame)
+        if result[0] == 1:
+            st.write('')
+            st.write('')
+            st.error('Patient is Diabetic')
+        else:
+            st.write('')
+            st.write('')
+            st.success('Patient is not Diabetic')''''''
