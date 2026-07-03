@@ -10,4 +10,6 @@ print(pd.__version__)
 print(np.__version__)
 print(st.__version__)
 print(sl.__version__)
+print(plt.__version__)
+print(b.__version__)
 
