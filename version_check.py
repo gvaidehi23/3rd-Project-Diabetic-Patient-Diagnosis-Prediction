@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import sklearn as sl
+import matplotlib.pyplot as plt
+import base64 as b
+
 
 print(pd.__version__)
 print(np.__version__)
