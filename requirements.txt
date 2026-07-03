@@ -4,5 +4,5 @@ streamlit
 scikit-learn
 matplotlib
 base64
-pickle
+
 
