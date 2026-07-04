@@ -157,15 +157,17 @@ if diagnose:
     frame = pd.DataFrame(scaled, columns=columns)
 
     
-    data = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
     table = pd.DataFrame({'data':[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age] , 'columns' : ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']})
-    
-   
-
     
     styled_table = table.style.format(precision=0).apply(
     lambda x: ['background-color: #FDEBD0' if x.name % 2 == 0 else 'background-color: #FAD7A0' for _ in x],
     axis=1
+    )
+
+    st.title("")
+    st.markdown(
+    "<h2 style='font-size:25px;'>📊 Patient Input Summary</h2>",
+    unsafe_allow_html=True
     )
 
     st.dataframe(
@@ -175,16 +177,22 @@ if diagnose:
     )
    
     st.title("")
-    data1 = {'data':['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'] , 'columns' :  [Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]}
-    chart_df = pd.DataFrame(data1)
-    fig, ax = plt.subplots(figsize=(8,4))
-    ax.bar(chart_df['data'], chart_df['columns'])
-    plt.xticks(rotation = 90)
-    st.pyplot(fig)
+    st.markdown(
+    "<h2 style='font-size:25px;'>💙 Health Parameter Overview : </h2>",
+    unsafe_allow_html=True
+    )
+   
+    table = table.set_index('columns')
+    st.bar_chart(table['data'], color = '#FAD7A0')
+    
 
     result = model.predict(frame)
     st.title("")
 
+    st.markdown(
+    "<h2 style='font-size:25px;'>🔍 Evalution Status : </h2>",
+    unsafe_allow_html=True
+    )
     if result[0] == 1:
        st.markdown("""
        <div style="
@@ -195,8 +203,7 @@ if diagnose:
        font-size:18px;
        font-weight:bold;
        box-shadow:0px 4px 12px rgba(0,0,0,0.2);
-       ">
-⚠️     Patient is Diabetic
+       ">⚠️     Patient is Diabetic
        </div>
        """, unsafe_allow_html=True)
     else:
@@ -215,4 +222,4 @@ if diagnose:
         """, unsafe_allow_html=True)
 
     st.title("")
-    st.caption("Note : The final data is predicted based on other factors too. Accuracy may vary since it is assumed considering previous reords of the conditions.")
+    st.caption("Note : The final data is predicted based on other factors too. Accuracy may vary since it is assumed considering previous records of the conditions.")
